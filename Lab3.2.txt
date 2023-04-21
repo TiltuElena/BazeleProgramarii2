@@ -1,0 +1,58 @@
+type PNode = ^Node; 
+     Node = record
+       inf: integer;
+       next: PNode;
+     end;
+Var S:String;
+    St:PNode;
+    i: integer;
+    n1, n2, rez, k: integer;
+procedure Push( var Head: PNode; x: integer);
+var NewNode: PNode;
+begin
+  New(NewNode);         
+  NewNode^.inf := x;    
+  NewNode^.next := Head;
+  Head := NewNode;
+end;
+Procedure Pop (var Head: Pnode; Var p:integer);
+var q: PNode;
+begin
+  if Head <> nil then 
+  begin  
+  p:=St^.inf;
+  q := Head;          
+  Head := Head^.next; 
+  Dispose(q ); 
+  end;           
+end;
+begin
+  Writeln('Introduceti expresia aritmetica:');
+  readln(S);
+  St:= Nil;
+  For i:=1 to length(S) do 
+  begin
+    if S[i] in ['0'..'9'] then
+    begin
+      k:= ord(S[i])- ord('0');
+      Push(St,k);
+    end
+    else
+    begin
+      Pop(St,n1);
+      Pop(St,n2);
+      case S[i] of
+        '+': rez:=n2+n1;
+        '-': rez:=n2-n1;
+        '*': rez:=n2*n1
+        else
+          begin write('sirul incorect'); exit; end;
+      end;
+      Push(St,rez);
+    end;
+  end;
+  If St^.next<>Nil then
+    write('sirul incorect')
+  else
+    write('Rezultat: ', St^.inf);
+end.

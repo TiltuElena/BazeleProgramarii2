@@ -1,0 +1,44 @@
+type PNode = ^Node;
+     Node = record
+       data: char;  
+       next: PNode;
+     end;
+Var S:String;
+    St:PNode;
+    i: integer;
+procedure Push( var Head: PNode; x: char);
+var NewNode: PNode;
+begin
+  New(NewNode);          
+  NewNode^.data := x;    
+  NewNode^.next := Head; 
+end;
+Procedure Pop (var Head: Pnode);
+var q: PNode;
+begin
+  if Head <> nil then 
+  begin
+  q := Head;             
+  Head := Head^.next; 
+  Dispose(q); 
+  end;           
+end;
+begin
+  Writeln('Introduceti sirul:');
+  readln(S);
+  St:= Nil;
+  For i:=1 to length(S) do 
+  begin
+    If S[i] in ['(','[','{'] then
+       Push(St,S[i])
+    else
+      If (St<>Nil) and ((St^.data + S[i]='()') or (St^.data + S[i]='[]') or (St^.data + S[i]='{}')) then
+        Pop(St)
+    else
+      Push(St,S[i]); // {}(
+  end;
+  If St=Nil then
+    write('Sirul corect')
+  else
+    write('Sirul incorect');
+end.

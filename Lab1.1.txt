@@ -1,0 +1,39 @@
+var p, i, n:integer;
+procedure cifre1(n:integer; Var p,i:integer);
+begin
+  p:=0; i:=0;
+  while (n>0) do
+  begin
+    if (n mod 2 = 0) then
+      p:=p*10 + n mod 10
+    else
+      i:=i*10 + n mod 10;
+    n:=n div 10;   
+end;
+end;
+procedure cifre2(n:integer; Var p,i:integer);
+begin
+  if (n=0) then
+  begin
+    p:=0; i:=0;
+  end
+ else
+   begin
+    cifre2(n div 10, p, i);
+    if (n mod 2 = 0) then
+      p:=p*10 + n mod 10
+    else
+      i:=i*10 + n mod 10;
+   end;
+end;
+
+begin
+  write('Introdu un numar: ');
+  readln(n);
+  cifre1(n,p,i);
+  writeln('p cu cifrele pare: ',p);
+  write('i cu cifrele impare: ',i);
+  cifre2(n,p,i);
+  writeln('p cu cifrele pare: ',p);
+  write('i cu cifrele impare: ',i);
+end.

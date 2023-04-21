@@ -1,0 +1,51 @@
+Type  Element = Record
+    inf: integer;
+    next: ^Element;
+  end;
+Var Sant1, Sant2: ^Element;
+    X:^Element;
+    k, i, n, S, max : integer;
+Begin
+  New(Sant1);
+  New(Sant2);
+  Sant1^.next:=Sant2;
+  Write('Introduceti numarul de elemente: ');
+  Readln(k);
+  For i:=1 to k do 
+  begin
+    Readln(n);
+    X:=Sant1;
+    X^.inf:=n;
+    New(Sant1);
+    Sant1^.next:=X;
+  end;
+  X:=Sant1^.next;
+  while X<>Sant2 do 
+  begin
+    write(X^.inf, ' ');
+    X:=X^.next;
+  end;
+  writeln;
+  If Sant1^.next<>Sant2 then
+  begin
+    X:=Sant1^.next;
+    S:=0;
+    while X<>Sant2 do
+    begin
+      S:= S + X^.inf;
+      X:= X^.next;
+    end;
+    writeln('Suma elementelor listei = ', S);
+    Max:=Sant1^.next^.inf;
+    X:=Sant1^.next^.next;
+    while X<>Sant2 do 
+    begin
+      if X^.inf>max then
+        Max:=X^.inf;
+      X:=X^.next;
+    end;
+    writeln('Elementul maxim = ', max);
+  end
+  else
+  writeln('Lista este vida');
+end.

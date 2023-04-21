@@ -1,0 +1,116 @@
+program consumatorE;
+  type NOD = record
+    value: record
+      name: string[20];
+      tel: string[10];
+    end;
+    link: ^NOD;
+    end;
+  
+var head, tail: ^NOD;
+    n: word;
+    nameToDelete: string[20];
+    
+// procedura de creare a listei 
+Procedure initList();
+begin
+  new(head);
+  new(tail);
+  head^.link:= tail;
+end;
+
+// completarea listei cu informatie
+procedure fillList(n: word);
+var point, consumator: ^NOD;
+begin
+  while n > 0 do
+    begin
+      consumator := tail;
+      writeln;
+      write('Introduceti numele consumatorului: ');
+      readln(consumator^.value.name);
+      write('Introduceti nr de telefon a consumatorului: ');
+      readln(consumator^.value.tel);  
+      new(tail);
+      consumator^.link := tail;
+      n := n-1;
+    end;
+end;
+
+// afisarea listei
+procedure trackList(message: string);
+var consumator: ^NOD;
+begin
+  writeln;
+  writeln('====================');
+  writeln(message);
+  writeln;
+  
+  consumator := head^.link;
+  if(consumator = tail) then writeln('List is empty!');
+  
+  while(consumator <> tail) do
+  begin
+    writeln(consumator^.value.name);
+    consumator := consumator^.link;
+  end;
+  
+  writeln;
+  writeln('===================');
+end;
+
+// stergerea consumatorului din lista
+procedure deleteElementByName(name: string[20]);
+var consumator, point: ^NOD;
+begin
+  consumator := head^.link;
+  while(CONSUMATOR <> tail) do
+    begin
+    if (consumator^.value.name = name) then
+    begin
+      new(point);
+      point := consumator^.link;
+      consumator^:= point^;
+      if (point = tail) then tail := consumator;
+      dispose(point);
+    end
+    else consumator := consumator^.link;
+    end;
+end;
+
+procedure disposeList();
+var point, x: ^NOD;
+begin
+  point := head^.link;
+  while(point <> tail)do
+  begin
+    new(x);
+    x := point;
+    point:= point^.link;
+    dispose(x);
+  end;
+  dispose(head);
+  dispose(tail);
+end;
+
+begin
+  //Crearea listei
+  initList();
+  //Numarul de consumatori
+  write('Enter person number: ');
+  readln(n);
+  //Adaugam valori in lista
+  fillList(n);
+  //Afisarea listei inititale
+  trackList('Initial list');
+  writeln;
+  write('Enter person name to delete from list: ');
+  readln(nameToDelete);
+  writeln;
+  //Excludem din lista persoana indicata
+  deleteElementByName(nameToDelete);
+  trackList('List modified');
+  writeln;
+  //Curatarea memoriei
+  disposeList();
+end.

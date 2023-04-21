@@ -1,0 +1,48 @@
+Type
+  tablou=array[1..100] of integer;
+var 
+  A:tablou;
+  n:integer;
+  i:integer;
+procedure citire(var A:tablou; n:integer); 
+var   i:integer; 
+begin
+  writeln('Introduceti elementele vectorului:');
+  for i:=1 to n do
+    read(A[i]);
+end;
+
+function sumcifr(n:integer; p:integer):integer;
+var sum:integer; k:integer;
+begin
+  sum:=0;
+  while (n>0) do
+  begin
+    k:= n mod 10;
+    if (k mod 2 = p mod 2) then 
+      sum:= sum + k;
+    n:= n div 10;
+  end;
+  sumcifr:=sum;
+end; 
+procedure inlocuire(var A:tablou; n:integer);
+var   i:integer; 
+begin
+  for i:=1 to n do
+    A[i]:=sumcifr(A[i],i);
+end;
+procedure afisare(A:tablou; n:integer);
+var   i:integer; 
+begin
+  writeln('Elementele vectorului modificat:');
+  for i:=1 to n do
+    write(A[i],' ');
+end;
+
+begin
+  write('Numarul de elemente ale vectorului: ');
+  readln(n);
+  citire(A,n);
+  inlocuire(A,n);
+  afisare(A,n);
+end.
